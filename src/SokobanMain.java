@@ -16,7 +16,7 @@ public class SokobanMain {
 
     public static SokobanResultType runLevel(
         IAgent agent, String agentId, String levelset, int level,
-        String resultDir, int timeout, boolean verbose, boolean optimal) {
+        String resultDir, int timeout, boolean verbose, boolean optimal, boolean visualization) {
 
         agent.init(optimal, verbose);
 
@@ -27,7 +27,7 @@ public class SokobanMain {
             System.out.println();
 
         SokobanResult result =
-            Sokoban.simAgentLevel(agentId, levelset, level, timeout, agent, verbose, optimal);
+            Sokoban.simAgentLevel(agentId, levelset, level, timeout, agent, verbose, optimal, visualization);
 
         SokobanResultType resultType = result.getResult();
         System.out.printf("%s in %.1f ms",
@@ -87,6 +87,7 @@ public class SokobanMain {
         String resultDir = null;
         int timeout = 0;
         boolean verbose = false;
+        boolean visualization = false;
 
         for (int i = 0 ; i < args.length ; ++i) {
             String s = args[i];
@@ -117,6 +118,9 @@ public class SokobanMain {
                 case "-v":
                     verbose = true;
                     break;
+                case "-viz":
+                    visualization = true;
+                    break;
                 default:
                     if (s.startsWith("-"))
                         usage();
@@ -133,7 +137,7 @@ public class SokobanMain {
             if (level > 0) {
                 IAgent agent = (IAgent) Class.forName(className).getConstructor().newInstance();
                 SokobanResultType resultType = runLevel(
-                    agent, agentId, levelset, level, resultDir, timeout, verbose, optimal);
+                    agent, agentId, levelset, level, resultDir, timeout, verbose, optimal, visualization);
                 System.exit(resultType.getExitValue());	    	    
             }
             else

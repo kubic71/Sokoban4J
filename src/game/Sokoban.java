@@ -327,7 +327,7 @@ public class Sokoban {
 	 */
 	public static SokobanResult simAgentLevel(
         String id, String levelFilePath, int levelNumber,
-        int timeoutMillis, IAgent agent, boolean verbose, boolean optimal) {
+        int timeoutMillis, IAgent agent, boolean verbose, boolean optimal, boolean visualization) {
 
 		// CREATE CONFIG
 		SokobanConfig config = new SokobanConfig();
@@ -340,7 +340,7 @@ public class Sokoban {
                                        "'\nResolved from: " + levelFilePath);
         config.levelFormat = determineLevelFormat(config.levelFile.getName());
 		config.levelNumber = levelNumber;		
-		config.visualization = false;
+		config.visualization = visualization;
         config.timeoutMillis = timeoutMillis;
         config.verbose = verbose;
         config.requireOptimal = optimal;
